@@ -1,0 +1,108 @@
+<html>
+<head>
+    <style>
+        html, body {
+            margin: 0;
+            color: white;
+            font-family: "Roboto", sans-serif;
+            font-size: 12px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        #canvas {
+            position: fixed;
+            z-index: -1;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            transition: all 0.3s ease-in-out;
+        }
+
+        #canvas.active {
+            z-index: 100;
+            left: 60px;
+            top: 60px;
+            width: calc(100vw - 120px);
+            height: calc(100vh - 120px);
+            cursor: url(img/pipette.png) 0 40, auto;
+        }
+
+        .title {
+            font-family: "Times New Roman", serif;
+            font-size: 64px;
+            margin-bottom: 30px;
+            transition: all 2s ease-in-out;
+        }
+
+        .title.hidden {
+            opacity: 0;
+        }
+
+        .button {
+            width: 180px;
+            height: 60px;
+            line-height: 60px;
+            background: transparent;
+            color: #FFF;
+            border: 1px solid #FFF;
+            border-radius: 45px;
+            cursor: url(img/pipette.png) 0 40, auto;
+        }
+
+        .scene-game {
+            position: fixed;
+            z-index: -2;
+            bottom: 10px;
+            left: 80px;
+        }
+
+        p {
+            color: black;
+        }
+
+        .color-name {
+            font-weight: 700;
+            background: #CCC;
+            border-radius: 45px;
+            padding: 8px 16px 8px 16px;
+            margin-left: 4px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="scene-game">
+            <p class="task-wrapper ">
+                Pick the closest color to <span class="color-name">violet blue</span>
+            </p>
+        </section>
+        <section class="scene-gradient">
+            <canvas id="canvas" width="150" height="150"></canvas>
+        </section>
+        <section class="scene-intro hidden">
+            <div class="title">pickr</div>
+            <div class="button start-button">START</div>
+        </section>
+        <section class="scene-end hidden">
+            <div class="score-wrapper">Game over. Your error rate is <span class="score-text"></span></div>
+            <div class="button restart-button">PLAY AGAIN</div>
+        </section>
+
+    </div>
+    <script src="dist/bundle.js"></script>
+</body>
+</html>
