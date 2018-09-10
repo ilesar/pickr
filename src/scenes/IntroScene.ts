@@ -1,9 +1,7 @@
-import {BaseScene} from "./BaseScene";
-import {GameEvents} from "../enum/GameEvents";
+import {SceneSelectors} from "../enum/Selectors";
 import {StartButton} from "../models/StartButton";
-import {SceneSelectors, Selectors} from "../enum/Selectors";
 import {Title} from "../models/Title";
-
+import {BaseScene} from "./BaseScene";
 
 export class IntroScene extends BaseScene {
 
@@ -23,11 +21,6 @@ export class IntroScene extends BaseScene {
 
     public get startButton() {
         return this._button;
-    }
-
-    public async hide() {
-        await this._title.hide();
-        await super.hide();
     }
 
 }

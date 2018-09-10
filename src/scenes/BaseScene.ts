@@ -1,15 +1,13 @@
-import {SceneInterface} from "../interfaces/SceneInterface";
-import {Modifiers} from "../enum/Modifiers";
+import {MethodNotImplementedError} from "../errors/MethodNotImplementedError";
+import {HideableInterface} from "../interfaces/HideableInterface";
 
-export class BaseScene implements SceneInterface{
+export class BaseScene implements HideableInterface {
     protected _wrapper: any;
+    public async show(): Promise<void> {
+        throw new MethodNotImplementedError();
+    }
 
     public async hide(): Promise<void> {
-        this._wrapper.classList.add(Modifiers.Hidden);
+        throw new MethodNotImplementedError();
     }
-
-    public async show(): Promise<void> {
-        this._wrapper.classList.remove(Modifiers.Hidden);
-    }
-
 }

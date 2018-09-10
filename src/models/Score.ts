@@ -10,4 +10,12 @@ export class Score {
         this._score = document.querySelector(Selectors.Score);
     }
 
+    public set score(score: number) {
+        this._score.innerHTML = this.formatOutput(score);
+    }
+
+    private formatOutput(output: number) {
+        return output.toFixed(2);
+    }
+
 }

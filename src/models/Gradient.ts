@@ -1,36 +1,63 @@
-import {ColorHelper} from "../helpers/ColorHelper";
 import {GameEvents} from "../enum/GameEvents";
-import {Color} from "./Color";
-import {MousePositionInterface} from "../interfaces/MousePositionInterface";
 import {MouseEvents} from "../enum/MouseEvents";
 import {Selectors} from "../enum/Selectors";
+import {MethodNotImplementedError} from "../errors/MethodNotImplementedError";
+import {ColorHelper} from "../helpers/ColorHelper";
+import {MousePositionInterface} from "../interfaces/MousePositionInterface";
+import {Color} from "./Color";
 
 export class Gradient {
-    private _canvas: any;
+    private _wrapper: any;
     private _context: any;
+    private _currentColor: Color;
+    private _lock: boolean = false;
 
     public constructor() {
-        this._canvas = <HTMLCanvasElement> document.getElementById(Selectors.Canvas);
-        this._context = this._canvas.getContext("2d");
+        this._wrapper = document.getElementById(Selectors.Canvas) as HTMLCanvasElement;
+        this._context = this._wrapper.getContext("2d");
 
         this.initEvents();
     }
 
-    public activate(): void {
-        this._canvas.classList.add("active");
+    public async activate(): Promise<void> {
+        throw new MethodNotImplementedError();
     }
 
-    public deactivate(): void {
-        this._canvas.classList.remove("active");
+    public async deactivate(): Promise<void> {
+        throw new MethodNotImplementedError();
+    }
+
+    public draw(color: Color): void {
+        this.addPoint(
+            `rgba(${color.gradientColors[1]},1)`,
+            `rgba(${color.gradientColors[0]},0)`,
+            0, 150, 1, 0, 150, 200);
+        this.addPoint(
+            `rgba(${color.gradientColors[2]},1)`,
+            `rgba(${color.gradientColors[1]},0)`,
+            150, 150, 1, 150, 150, 200);
+        this.addPoint(
+            `rgba(${color.gradientColors[0]},1)`,
+            `rgba(${color.gradientColors[2]},0)`,
+            75, 0, 1, 75, 0, 200);
+
+        this._currentColor = color;
     }
 
     private initEvents(): void {
-        this._canvas.addEventListener(MouseEvents.Click, (event: any) => {
+        this._wrapper.removeEventListener(MouseEvents.Click, () => {});
+        this._wrapper.addEventListener(MouseEvents.Click, (event: any) => {
             this.onMouseClick(event);
         });
     }
 
     private onMouseClick(event: any): void {
+        console.log(this.isLocked());
+        if (this.isLocked()) {
+            return;
+        }
+
+        this._lock = true;
         const mousePos = this.getMousePos(event);
         const mouseColor = this.getMouseColor(mousePos.x, mousePos.y);
 
@@ -43,18 +70,12 @@ export class Gradient {
     }
 
     private getMousePos(e: any): MousePositionInterface {
-        const rect = this._canvas.getBoundingClientRect();
+        const rect = this._wrapper.getBoundingClientRect();
 
         return {
-            x: (e.clientX - rect.left) / (rect.width / this._canvas.width),
-            y: (e.clientY - rect.top) / (rect.height / this._canvas.height),
+            x: (e.clientX - rect.left) / (rect.width / this._wrapper.width),
+            y: (e.clientY - rect.top) / (rect.height / this._wrapper.height),
         };
-    }
-
-    public draw(color: Color): void {
-        this.addPoint(`rgba(${color.gradientColors[1]},1)`, `rgba(${color.gradientColors[0]},0)`, 0,150,1,0,150,200);
-        this.addPoint(`rgba(${color.gradientColors[2]},1)`, `rgba(${color.gradientColors[1]},0)`, 150,150,1,150,150,200);
-        this.addPoint(`rgba(${color.gradientColors[0]},1)`, `rgba(${color.gradientColors[2]},0)`, 75,0,1,75,0,200);
     }
 
     private addPoint(primaryColor: string, secondaryColor: string, ...gradientData: number[]): void {
@@ -63,6 +84,10 @@ export class Gradient {
         radialGradient.addColorStop(1, secondaryColor);
 
         this._context.fillStyle = radialGradient;
-        this._context.fillRect(0,0,150,150);
+        this._context.fillRect(0, 0, 150, 150);
+    }
+
+    private isLocked(): boolean {
+        return this._lock;
     }
 }

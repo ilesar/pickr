@@ -1,30 +1,32 @@
 import {GameEvents} from "../enum/GameEvents";
 import {MouseEvents} from "../enum/MouseEvents";
 import {Selectors} from "../enum/Selectors";
-import {Modifiers} from "../enum/Modifiers";
+import {MethodNotImplementedError} from "../errors/MethodNotImplementedError";
+import {HideableInterface} from "../interfaces/HideableInterface";
 
-export class StartButton {
+export class StartButton implements HideableInterface {
 
-    private _button: any;
+    private _wrapper: any;
 
-    constructor() {
-        this._button = document.querySelector(Selectors.StartButton);
+    public constructor() {
+        this._wrapper = document.querySelector(Selectors.StartButton);
 
         this.initEvents();
     }
 
+    public async show(): Promise<void> {
+        throw new MethodNotImplementedError();
+    }
+
+    public async hide(): Promise<void> {
+        throw new MethodNotImplementedError();
+    }
+
     private initEvents() {
-        this._button.addEventListener(MouseEvents.Click, () => {
+        this._wrapper.removeEventListener(MouseEvents.Click, (event: any) => {});
+        this._wrapper.addEventListener(MouseEvents.Click, () => {
             document.dispatchEvent(new CustomEvent(GameEvents.Start));
         });
-    }
-
-    public hide() {
-        this._button.classList.add(Modifiers.Hidden);
-    }
-
-    public show() {
-        this._button.classList.remove(Modifiers.Hidden);
     }
 
 }

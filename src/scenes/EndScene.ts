@@ -1,25 +1,23 @@
-import {BaseScene} from "./BaseScene";
-import {SceneSelectors, Selectors} from "../enum/Selectors";
+import {SceneSelectors} from "../enum/Selectors";
 import {RestartButton} from "../models/RestartButton";
+import {Score} from "../models/Score";
+import {BaseScene} from "./BaseScene";
 
 export class EndScene extends BaseScene {
 
+    protected _wrapper: any;
     private _button: RestartButton;
-    private _scoreText: any;
+    private _scoreText: Score;
 
     public constructor() {
         super();
         this._wrapper = document.querySelector(SceneSelectors.EndScene);
-        this._scoreText = document.querySelector(Selectors.Score);
+        this._scoreText = new Score();
         this._button = new RestartButton();
     }
 
     public setScore(score: number) {
-        this._scoreText.innerHTML = this.formatOutput(score);
-    }
-
-    private formatOutput(output: number) {
-        return output.toFixed(2);
+        this._scoreText.score = score;
     }
 
 }

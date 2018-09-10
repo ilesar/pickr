@@ -4,10 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "exec": "NODE_ENV=local LOG_LEVEL=verbose node dist/App.js",
+    "watch": "npx webpack --watch",
     "build": "tsc",
-    "test": "mocha dist/test --reporter=list --recursive",
-    "build>test": "npm run build && mocha dist/test --reporter=list --recursive",
     "tslint": "tslint --project tsconfig.json --format stylish",
     "tslintfix": "tslint --project tsconfig.json --format stylish --fix",
     "report": "mocha dist/test --reporter mochawesome --recursive --reporter-options reportDir=report"

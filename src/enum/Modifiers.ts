@@ -1,3 +1,4 @@
 export enum Modifiers {
-    Hidden = "hidden"
+    Hidden = "hidden",
+    Hide = "hide",
 }

@@ -1,10 +1,11 @@
-import {IntroScene} from "./scenes/IntroScene";
-import {GameScene} from "./scenes/GameScene";
-import {EndScene} from "./scenes/EndScene";
 import {GameEvents} from "./enum/GameEvents";
+import {DelayHelper} from "./helpers/DelayHelper";
+import {EndScene} from "./scenes/EndScene";
+import {GameScene} from "./scenes/GameScene";
+import {IntroScene} from "./scenes/IntroScene";
 
 export class Game {
-    private readonly MAX_ROUND = 3;
+    private readonly MAX_ROUND = 5;
     private _round: number = 0;
     private _score: number = 0;
     private _introScene: IntroScene;
@@ -16,56 +17,58 @@ export class Game {
         this.initEvents();
     }
 
+    public async init() {
+        await DelayHelper.sleep(400);
+        await this._introScene.show();
+    }
+
     private loadScenes() {
         this._introScene = new IntroScene();
         this._gameScene = new GameScene();
         this._endScene = new EndScene();
     }
 
-    public init() {
-        this._introScene.show();
-    }
-
-    private start() {
-        this._endScene.hide();
+    private async start() {
+        await this._endScene.hide();
         this._score = 0.0;
         this._round = 0;
         this.incrementRound();
-        this._introScene.hide();
+        await this._introScene.hide();
+        await DelayHelper.sleep(300);
         this._gameScene.activate();
     }
 
-    private nextRound() {
-        this._gameScene.deactivate();
+    private async nextRound() {
+        await this._gameScene.deactivate();
+        if (!this.incrementRound()) {
+            await this.end();
+            return;
+        }
 
-        setTimeout(() => {
-            if (!this.incrementRound()) {
-                this.end();
-                return;
-            }
+        await DelayHelper.sleep(600);
+        await this._gameScene.activate();
+    }
 
-            this._gameScene.activate();
-        }, 700);
+    private async end() {
+        await this._gameScene.deactivate();
+        this._endScene.setScore(this._score);
+        await DelayHelper.sleep(300);
+        await this._endScene.show();
     }
 
     private initEvents() {
-        document.addEventListener(GameEvents.Start, () => {
-            this.start();
+        document.removeEventListener(GameEvents.Start, (event: any) => {});
+        document.addEventListener(GameEvents.Start, async () => {
+            await this.start();
         });
 
+        document.removeEventListener(GameEvents.NextRound, (event: any) => {});
         document.addEventListener(GameEvents.NextRound, (event: any) => {
             this._score += event.detail;
-            console.log(event.detail);
-            console.log(this._score);
+            // console.log(`Round score: ${event.detail}`);
+            // console.log(`SCORE: ${this._score}`);
             this.nextRound();
-        })
-    }
-
-    public end() {
-        this._gameScene.deactivate();
-        console.log(`Setting score to ${this._score}`);
-        this._endScene.setScore(this._score);
-        this._endScene.show();
+        });
     }
 
     private incrementRound(): boolean {
@@ -75,7 +78,7 @@ export class Game {
             return false;
         }
 
-        console.log(`Starting round ${this._round} of ${this.MAX_ROUND}`);
+        console.log(`Starting round ${this._round}/${this.MAX_ROUND}`);
 
         return true;
     }

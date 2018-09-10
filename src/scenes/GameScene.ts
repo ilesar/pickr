@@ -1,13 +1,14 @@
-import {BaseScene} from "./BaseScene";
-import {Gradient} from "../models/Gradient";
-import {Color} from "../models/Color";
-import {SceneSelectors} from "../enum/Selectors";
-import {Task} from "../models/Task";
 import {GameEvents} from "../enum/GameEvents";
+import {SceneSelectors} from "../enum/Selectors";
 import {ColorHelper} from "../helpers/ColorHelper";
+import {Color} from "../models/Color";
+import {Gradient} from "../models/Gradient";
+import {Task} from "../models/Task";
+import {BaseScene} from "./BaseScene";
 
 export class GameScene extends BaseScene {
 
+    protected _wrapper: any;
     private _color: Color;
     private _gradient: Gradient;
     private _task: Task;
@@ -22,15 +23,17 @@ export class GameScene extends BaseScene {
         this.initEvents();
     }
 
-    public activate() {
-        super.show();
+    public async activate(): Promise<void> {
         this.setNewColor();
-        this._gradient.activate();
+
+        await this._gradient.activate();
+        // await DelayHelper.sleep(300);
+        await this._task.show();
     }
 
-    public deactivate() {
-        super.hide();
-        this._gradient.deactivate();
+    public async deactivate() {
+        await this._task.hide();
+        await this._gradient.deactivate();
     }
 
     private setNewColor() {
@@ -40,11 +43,11 @@ export class GameScene extends BaseScene {
     }
 
     private initEvents() {
+        document.removeEventListener(GameEvents.ColorPicked, (event: any) => {});
         document.addEventListener(GameEvents.ColorPicked, (event: any) => {
-            let difference = ColorHelper.colorDiffHex(event.detail, this._color.hex);
+            const difference = ColorHelper.colorDiffHex(event.detail, this._color.hex);
             document.dispatchEvent(new CustomEvent(GameEvents.NextRound, {detail: parseFloat(difference)}));
-        })
+        });
     }
-
 
 }
