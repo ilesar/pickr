@@ -8,7 +8,6 @@
     "build": "npx webpack",
     "tslint": "tslint --project tsconfig.json --format stylish",
     "tslintfix": "tslint --project tsconfig.json --format stylish --fix",
-    "report": "mocha dist/test --reporter mochawesome --recursive --reporter-options reportDir=report"
   },
   "author": "",
   "license": "ISC",
