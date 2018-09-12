@@ -40,7 +40,6 @@ export class Gradient {
             `rgba(${color.gradientColors[0]},1)`,
             `rgba(${color.gradientColors[2]},0)`,
             75, 0, 1, 75, 0, 200);
-        this.addCircle();
 
         this._currentColor = color;
         return this.calculateEpsilon();
@@ -86,12 +85,6 @@ export class Gradient {
 
         this._context.fillStyle = radialGradient;
         this._context.fillRect(0, 0, 150, 150);
-    }
-
-    private addCircle() {
-        this._context.beginPath();
-        this._context.arc(100, 75, 1, 0, 2 * Math.PI);
-        this._context.fill();
     }
 
     private isLocked(): boolean {
