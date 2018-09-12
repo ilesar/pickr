@@ -1,4 +1,5 @@
 # Pickr
+![Pickr image](./img/screenshot.png) 
 
 A multi-gradient color picker game made for the [13kGames contest](https://js13kgames.com/).
 
@@ -20,3 +21,4 @@ npm run build
 
 
 Launch index.html file in your favorite browser. Tested in Chrome, Firefox and Safari on the desktop environment.
+
