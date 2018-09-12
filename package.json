@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "watch": "npx webpack --watch",
-    "build": "tsc",
+    "build": "npx webpack",
     "tslint": "tslint --project tsconfig.json --format stylish",
     "tslintfix": "tslint --project tsconfig.json --format stylish --fix",
     "report": "mocha dist/test --reporter mochawesome --recursive --reporter-options reportDir=report"
@@ -13,31 +13,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/chai": "^4.1.4",
-    "@types/chai-as-promised": "^7.1.0",
     "@types/events": "^1.2.0",
-    "@types/express": "^4.16.0",
-    "@types/mocha": "^5.2.3",
-    "@types/sinon": "^5.0.1",
-    "chai": "^4.1.2",
-    "chai-as-promised": "^7.1.1",
-    "class-validator": "^0.8.5",
-    "mocha": "^5.2.0",
-    "mocha-typescript": "^1.1.16",
-    "mochawesome": "^3.0.2",
-    "sinon": "^6.0.1",
     "ts-loader": "^5.0.0",
     "tslint": "^5.10.0",
     "tslint-sonarts": "^1.7.0",
     "typescript": "^2.9.2",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.1.0",
+    "webpack": "^4.17.2"
   },
-  "dependencies": {
-    "pm2": "^2.10.4",
-    "reflect-metadata": "^0.1.12",
-    "socket.io": "^2.1.1",
-    "typeorm": "^0.2.7",
-    "webpack": "^4.17.2",
-    "winston": "^2.4.2"
-  }
+  "dependencies": {}
 }
