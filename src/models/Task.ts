@@ -1,6 +1,6 @@
 import {Selectors} from "../enum/Selectors";
-import {HideableInterface} from "../interfaces/HideableInterface";
 import {MethodNotImplementedError} from "../errors/MethodNotImplementedError";
+import {HideableInterface} from "../interfaces/HideableInterface";
 
 export class Task implements HideableInterface {
 

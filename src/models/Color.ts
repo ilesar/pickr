@@ -1,8 +1,9 @@
+import {Colors} from "../Colors";
 import {GradientHelper} from "../helpers/GradientHelper";
 
 export class Color {
 
-    private _colors: any = require('../../colors.json');
+    private _colors: any = Colors.getDataset();
     private _name: string;
     private _hex: string;
     private _gradientColors: string[];
@@ -39,12 +40,13 @@ export class Color {
         let count: number = 0;
 
         for (const property in this._colors) {
-            if (Math.random() < 1/++count) {
+            if (Math.random() < 1 / ++count) {
                 this._name = property;
             }
         }
 
         this._hex = this._colors[this._name];
+        // this._gradientColors = GradientHelper.getTriadicScheme();
         this._gradientColors = GradientHelper.getTriadicScheme();
     }
 

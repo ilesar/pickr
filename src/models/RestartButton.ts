@@ -13,9 +13,8 @@ export class RestartButton {
     }
 
     private initEvents() {
-        this._button.removeEventListener(MouseEvents.Click, (event: any) => {});
+        this._button.removeEventListener(MouseEvents.Click, (event: any) => {/**/});
         this._button.addEventListener(MouseEvents.Click, () => {
-            console.log("Restart clicked");
             document.dispatchEvent(new CustomEvent(GameEvents.Start));
         });
     }

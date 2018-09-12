@@ -12,7 +12,10 @@
         "object-literal-sort-keys": false,
         "no-hardcoded-credentials": false,
         "no-unused-variable": false,
-        "no-commented-code": false
+        "no-commented-code": false,
+        "no-bitwise": false,
+        "one-variable-per-declaration": false,
+        "no-statements-same-line": false
     },
     "rulesDirectory": []
 }

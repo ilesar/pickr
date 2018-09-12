@@ -1,3 +1,3 @@
 export enum MouseEvents {
-    Click = 'click',
+    Click = "click",
 }

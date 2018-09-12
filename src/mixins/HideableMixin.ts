@@ -10,7 +10,7 @@ export class HideableMixin {
                 resolve();
             }
 
-            this._wrapper.removeEventListener(HideableMixinEvent.TransitionEnded, (event: any) => {});
+            this._wrapper.removeEventListener(HideableMixinEvent.TransitionEnded, (event: any) => {/**/});
             this._wrapper.addEventListener(HideableMixinEvent.TransitionEnded, () => {
                 // console.log(`Just hidden ${this.constructor.name}`);
                 resolve();
@@ -27,7 +27,7 @@ export class HideableMixin {
                 resolve();
             }
 
-            this._wrapper.removeEventListener(HideableMixinEvent.TransitionEnded, (event: any) => {});
+            this._wrapper.removeEventListener(GameEvents.ColorPicked, (event: any) => {/**/});
             this._wrapper.addEventListener(HideableMixinEvent.TransitionEnded, () => {
                 resolve();
             });

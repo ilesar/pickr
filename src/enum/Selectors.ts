@@ -1,8 +1,8 @@
 export enum Selectors {
     StartButton = ".start-button",
     RestartButton = ".restart-button",
-    Title = ".title",
     Task = ".task-wrapper",
+    Round = ".round-wrapper",
     ColorName = ".color-name",
     Canvas = "canvas",
     ScoreWrapper = ".score-wrapper",

@@ -23,7 +23,7 @@ export class StartButton implements HideableInterface {
     }
 
     private initEvents() {
-        this._wrapper.removeEventListener(MouseEvents.Click, (event: any) => {});
+        this._wrapper.removeEventListener(MouseEvents.Click, (event: any) => {/**/});
         this._wrapper.addEventListener(MouseEvents.Click, () => {
             document.dispatchEvent(new CustomEvent(GameEvents.Start));
         });

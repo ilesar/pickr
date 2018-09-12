@@ -13,8 +13,7 @@ export class ActivableMixin {
                 resolve();
             }
 
-
-            this._wrapper.removeEventListener(HideableMixinEvent.TransitionEnded, (event: any) => {});
+            this._wrapper.removeEventListener(HideableMixinEvent.TransitionEnded, (event: any) => {/**/});
             this._wrapper.addEventListener(HideableMixinEvent.TransitionEnded, () => {
                 // console.log(`Just activated ${this.constructor.name}`);
                 this._lock = false;
@@ -35,7 +34,7 @@ export class ActivableMixin {
                 resolve();
             }
 
-            this._wrapper.removeEventListener(HideableMixinEvent.TransitionEnded, (event: any) => {});
+            this._wrapper.removeEventListener(HideableMixinEvent.TransitionEnded, (event: any) => {/**/});
             this._wrapper.addEventListener(HideableMixinEvent.TransitionEnded, () => {
                 this._lock = false;
                 resolve();

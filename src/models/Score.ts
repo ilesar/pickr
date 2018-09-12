@@ -1,3 +1,4 @@
+import {Modifiers} from "../enum/Modifiers";
 import {Selectors} from "../enum/Selectors";
 
 export class Score {

@@ -1,5 +1,5 @@
-import {UndefinedRgbError} from "../errors/UndefinedRgbError";
 import {HexToRgbConversionError} from "../errors/HexToRgbConversionError";
+import {UndefinedRgbError} from "../errors/UndefinedRgbError";
 
 export abstract class ColorHelper {
     public static hsv2rgb(h: number, s: number, v: number) {
@@ -29,32 +29,42 @@ export abstract class ColorHelper {
         return [
             Math.round(r * 255),
             Math.round(g * 255),
-            Math.round(b * 255)
+            Math.round(b * 255),
         ];
     }
 
     public static hsv2rgbString(h: number, s: number, v: number) {
-        const rgbValue = ColorHelper.hsv2rgb(h,s,v);
+        const rgbValue = ColorHelper.hsv2rgb(h, s, v);
 
-        return rgbValue.join(',');
+        return rgbValue.join(",");
     }
 
     public static rgbToHex(r: number, g: number, b: number) {
-        if (r > 255 || g > 255 || b > 255)
-            throw "Invalid color component";
+        if (r > 255 || g > 255 || b > 255) {
+            throw new Error("Invalid color component");
+        }
         return ((r << 16) | (g << 8) | b).toString(16);
     }
 
     public static hexToRgb(hex: string) {
-        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        return result ? {
+        const result: RegExpExecArray | null = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
+        if (result === null) {
+            return {
+                r: 9999,
+                g: 9999,
+                b: 9999,
+            };
+        }
+
+        return {
             r: parseInt(result[1], 16),
             g: parseInt(result[2], 16),
-            b: parseInt(result[3], 16)
-        } : null;
+            b: parseInt(result[3], 16),
+        };
     }
 
-    public static colorDiffHex(hex1: string, hex2: string) {
+    public static colorDiffHex(hex1: string, hex2: string): number {
         const rgb1 = ColorHelper.hexToRgb(hex1);
         const rgb2 = ColorHelper.hexToRgb(hex2);
 
@@ -63,17 +73,17 @@ export abstract class ColorHelper {
         }
 
         const value = Math.sqrt(
-            Math.pow(rgb1.r - rgb2.r,2) +
-                Math.pow(rgb1.g - rgb2.g,2) +
-                Math.pow(rgb1.b - rgb2.b,2)
+            Math.pow(rgb1.r - rgb2.r, 2) +
+                Math.pow(rgb1.g - rgb2.g, 2) +
+                Math.pow(rgb1.b - rgb2.b, 2),
         );
 
         const maxValue = Math.sqrt(
-            Math.pow(255,2) +
-                Math.pow(255,2) +
-                Math.pow(255,2)
+            Math.pow(255, 2) +
+                Math.pow(255, 2) +
+                Math.pow(255, 2),
         );
 
-        return (value/maxValue * 100).toFixed(2);
+        return (value / maxValue * 100);
     }
 }

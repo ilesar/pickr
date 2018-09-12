@@ -55,6 +55,20 @@
         transition: all 1s ease-in-out;
     }
 
+    .round-wrapper {
+        position: fixed;
+        bottom: 12px;
+        right: 80px;
+        color: #333;
+        transform: translateY(0px);
+        transition: all 1s ease-in-out;
+    }
+
+    .round-wrapper.hidden {
+        transform: translateY(100px);
+        transition: all 1s ease-in-out;
+    }
+
     #canvas {
         position: fixed;
         z-index: -1;
@@ -117,12 +131,16 @@
 </style>
 <html>
 <head>
+    <title content="13k"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
     <div class="container">
         <section class="scene scene-game">
             <p class="task-wrapper hidden">
                 Pick the closest color to <span class="color-name">violet blue</span>
+            </p>
+            <p class="round-wrapper">
             </p>
         </section>
         <section class="scene scene-gradient">

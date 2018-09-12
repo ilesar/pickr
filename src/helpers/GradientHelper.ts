@@ -12,8 +12,8 @@ export class GradientHelper {
         ];
     }
 
-    private static createRGBstring(seed: number, delta: number) {
-        return ColorHelper.hsv2rgbString(seed + delta, 100, 100);
+    private static createRGBstring(seed: number, delta: number, saturation: number = 100, value: number = 100) {
+        return ColorHelper.hsv2rgbString(seed + delta, saturation, value);
     }
 }
 
@@ -21,5 +21,5 @@ enum GradientAngles {
     FullCircle = 360,
     First = 0,
     Second = 120,
-    Third = 240
+    Third = 240,
 }

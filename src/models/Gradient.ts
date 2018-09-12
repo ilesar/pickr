@@ -27,7 +27,7 @@ export class Gradient {
         throw new MethodNotImplementedError();
     }
 
-    public draw(color: Color): void {
+    public draw(color: Color): number {
         this.addPoint(
             `rgba(${color.gradientColors[1]},1)`,
             `rgba(${color.gradientColors[0]},0)`,
@@ -40,19 +40,20 @@ export class Gradient {
             `rgba(${color.gradientColors[0]},1)`,
             `rgba(${color.gradientColors[2]},0)`,
             75, 0, 1, 75, 0, 200);
+        this.addCircle();
 
         this._currentColor = color;
+        return this.calculateEpsilon();
     }
 
     private initEvents(): void {
-        this._wrapper.removeEventListener(MouseEvents.Click, () => {});
+        this._wrapper.removeEventListener(MouseEvents.Click, () => {/**/});
         this._wrapper.addEventListener(MouseEvents.Click, (event: any) => {
             this.onMouseClick(event);
         });
     }
 
     private onMouseClick(event: any): void {
-        console.log(this.isLocked());
         if (this.isLocked()) {
             return;
         }
@@ -87,7 +88,33 @@ export class Gradient {
         this._context.fillRect(0, 0, 150, 150);
     }
 
+    private addCircle() {
+        this._context.beginPath();
+        this._context.arc(100, 75, 1, 0, 2 * Math.PI);
+        this._context.fill();
+    }
+
     private isLocked(): boolean {
         return this._lock;
+    }
+
+    private calculateEpsilon(): number {
+        let min: number = 255;
+        for (let i = 0; i < this._wrapper.width; i++) {
+            for (let j = 0; j < this._wrapper.height; j++) {
+                const data = this._context.getImageData(i, j, 1, 1).data;
+                const delta: number = this.calculateDistanceTo(data[0], data[1], data[2]);
+
+                if (delta < min) {
+                    min = delta;
+                }
+            }
+        }
+
+        return min;
+    }
+
+    private calculateDistanceTo(r: number, g: number, b: number): number {
+        return ColorHelper.colorDiffHex(ColorHelper.rgbToHex(r, g, b), this._currentColor.hex);
     }
 }
