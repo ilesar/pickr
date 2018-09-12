@@ -7,7 +7,7 @@
     "watch": "npx webpack --watch",
     "build": "npx webpack",
     "tslint": "tslint --project tsconfig.json --format stylish",
-    "tslintfix": "tslint --project tsconfig.json --format stylish --fix",
+    "tslintfix": "tslint --project tsconfig.json --format stylish --fix"
   },
   "author": "",
   "license": "ISC",
